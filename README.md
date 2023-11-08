@@ -1,1 +1,1 @@
-# PsySocial-Replication-Project-Human-AI-Explaination
+# PsySocial-Replication-Project-Human-AI-Explanations
