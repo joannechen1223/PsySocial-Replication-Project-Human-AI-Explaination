@@ -1,0 +1,12 @@
+Age,Class of Worker,Education,Marital Status,Occupation,Place of Birth,Hrs worked per week,Gender,Race,Income above 50k,Income above 50k(pred)
+58,State government employee,Associate's degree,Married,OFF-Executive Secretaries And Executive Administrative Assistants,New York/NY,40,Female,White alone,True,True
+59,State government employee,Associate's degree,Married,"OFF-Secretaries And Administrative Assistants, Except Legal, Medial, And Executive",New York/NY,40,Female,White alone,True,True
+55,"Employee of a private for-profit company or business, or of an individual, for wages, salary, or commissions",Regular high school diploma,Never married or under 15 years old,TRN-Stockers And Order Fillers,New York/NY,40,Male,White alone,True,True
+52,"Employee of a private for-profit company or business, or of an individual, for wages, salary, or commissions",Regular high school diploma,Never married or under 15 years old,"TRN-Laborers And Freight, Stock, And Material Movers, Hand",New York/NY,40,Male,White alone,False,False
+69,"Local government employee (city, county, etc.)",Master's degree,Never married or under 15 years old,OFF-Other Information And Records Clerks,New York/NY,40,Female,White alone,True,True
+63,"Local government employee (city, county, etc.)",Master's degree,Married,CMM-Computer Support Specialists,New York/NY,40,Female,White alone,True,True
+64,State government employee,Master's degree,Never married or under 15 years old,EDU-Postsecondary Teachers,New York/NY,40,Female,White alone,False,False
+62,"Local government employee (city, county, etc.)",Bachelor's degree,Married,"OFF-Office Clerks, General",New York/NY,40,Female,White alone,False,False
+62,"Local government employee (city, county, etc.)",Bachelor's degree,Married,"OFF-Secretaries And Administrative Assistants, Except Legal, Medial, And Executive",New York/NY,40,Female,White alone,True,True
+51,"Local government employee (city, county, etc.)",Regular high school diploma,Married,TRN-Driver/Sales Workers And Truck Drivers,New York/NY,40,Male,White alone,True,True
+50,"Local government employee (city, county, etc.)",Regular high school diploma,Married,"TRN-Bus Drivers, School",Colombia,40,Male,White alone,False,False

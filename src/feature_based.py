@@ -1,4 +1,3 @@
-import random
 import pandas as pd
 import pickle
 
@@ -55,13 +54,13 @@ ct = ColumnTransformer(
 ct = ct.fit(features)
 
 
-instances = [random.randint(0, features_test.shape[0]) for _ in range(10)]
+instances = [11211, 1023, 4110]
 print(instances)
 predict_fn = lambda x: rf.predict_proba(ct.transform(x))
-for i in range(10):
+for i in range(len(instances)):
     exp = explainer.explain_instance(
         features[train.shape[0]:].iloc[instances[i]].to_numpy(),
         predict_fn,
-        num_features=10
+        num_features=9
     )
     exp.save_to_file('assets/feature_based/lime_%s.html' % instances[i])

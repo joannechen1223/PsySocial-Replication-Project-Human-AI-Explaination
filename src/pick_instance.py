@@ -37,3 +37,5 @@ incorrect_sample.to_csv('data/incorrect_sample.csv', index=False)
 
 print(correct_sample)
 print(incorrect_sample)
+print(correct_sample_idx)
+print(incorrect_sample_idx)
