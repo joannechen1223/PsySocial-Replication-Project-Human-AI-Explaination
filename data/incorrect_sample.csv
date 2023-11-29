@@ -1,0 +1,7 @@
+Age,Class of Worker,Education,Marital Status,Occupation,Place of Birth,Hrs worked per week,Gender,Race,Income above 50k,Income above 50k(pred)
+50.0,"Local government employee (city, county, etc.)","1 or more years of college credit, no degree",Married,EDU-Teaching Assistants,New York/NY,40.0,Female,White alone,False,True
+47.0,"Employee of a private not-for-profit, tax-exempt, or charitable organization",Associate's degree,Divorced,HLS-Personal Care Aides,Vermont/VT,50.0,Female,White alone,True,False
+62.0,"Local government employee (city, county, etc.)",Bachelor's degree,Married,OFF-First-Line Supervisors Of Office And Administrative Support Workers,New York/NY,40.0,Female,White alone,True,False
+52.0,"Local government employee (city, county, etc.)",Regular high school diploma,Married,TRN-Other Transportation Workers,New York/NY,40.0,Male,White alone,False,True
+65.0,"Employee of a private for-profit company or business, or of an individual, for wages, salary, or commissions","Some college, but less than 1 year",Divorced,SAL-Counter And Rental Clerks,New Jersey/NJ,40.0,Female,White alone,True,False
+24.0,"Local government employee (city, county, etc.)",Bachelor's degree,Never married or under 15 years old,PRT-Police Officers,Dominican Republic,55.0,Male,Some Other Race alone,False,True

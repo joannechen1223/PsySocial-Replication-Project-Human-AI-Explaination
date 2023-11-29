@@ -1,53 +1,52 @@
-import random
-
-# Data Source
-from folktables import ACSDataSource, ACSIncome
+import os
+import pandas as pd
+import pickle
 
 # Data Preprocessing
 from sklearn.preprocessing import LabelEncoder, OneHotEncoder
 from sklearn.compose import ColumnTransformer
-from sklearn.model_selection import train_test_split
 
 # Model
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 
-# Lime
-import lime
-import lime.lime_tabular
+from raw.features_dict import feature_names, categorical_feature_idx
 
-# Data Source
-data_source = ACSDataSource(survey_year='2018', horizon='1-Year', survey='person')
-data = data_source.get_data(states=['NY'], download=True)
-features, labels, _ = ACSIncome.df_to_pandas(data)
+# Read data
+train = pd.read_csv('data/train.csv')
+test = pd.read_csv('data/test.csv')
+features_train = train.iloc[:, :-1]
+label_train = train.iloc[:, -1]
+features_test = test.iloc[:, :-1]
+label_test = test.iloc[:, -1]
 
-print(ACSIncome.features)
+features = pd.concat([features_train, features_test])
+label = pd.concat([label_train, label_test])
+
 
 # Data Preprocessing
 le = LabelEncoder()
-feature_names = ['Age', 'Class of Worker', 'Education', 'Marital Status', 'Occupation',
-                 'Place of Birth', 'Relationship', 'Hrs worked per week', 'Sex', 'Race']
-categorical_features = [1, 2, 3, 4, 5, 6, 8, 9]
+
+feature_names = list(feature_names.values())
 categorical_names = {}
-for idx in categorical_features:
-    col = ACSIncome.features[idx]
+for idx in categorical_feature_idx:
+    col = feature_names[idx]
     le.fit(features[col])
     features[col] = le.transform(features[col])
     categorical_names[col] = le.classes_
 
-# print(categorical_names)
-# print(features[801:1000].shape)
-
 ct = ColumnTransformer(
-    [('one_hot_encoder', OneHotEncoder(), categorical_features)], remainder='passthrough')
+    [('one_hot_encoder', OneHotEncoder(), categorical_feature_idx)], remainder='passthrough')
 ct = ct.fit(features)
 
 
 X = ct.fit_transform(features)
-y = le.fit_transform(labels)
+y = le.fit_transform(label)
 
-# Splitting the dataset into the Training set and Test set
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, shuffle=False)
+X_train = X[:features_train.shape[0]]
+X_test = X[features_train.shape[0]:]
+y_train = y[:features_train.shape[0]]
+y_test = y[features_train.shape[0]:]
 
 # Training
 rf = RandomForestClassifier()
@@ -59,25 +58,14 @@ y_pred = rf.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
 print("Accuracy:", accuracy)
 
-n_train = X_train.shape[0]
-n_test = X_test.shape[0]
-features_train = features[:n_train]
-features_test = features[n_train:]
+# Export to pickle
+pickle.dump(rf, open('models/rf.pkl', 'wb'))
 
-# print(type(X_train))
-explainer = lime.lime_tabular.LimeTabularExplainer(
-    features_train.to_numpy(),
-    class_names=['<= $50k', '> $50k'],
-    feature_names=feature_names,
-    categorical_features=categorical_features,
-    categorical_names=categorical_names,
-)
+# Export to CSV
+dir = './data'
+if not os.path.exists(dir):
+    os.mkdir(dir)
 
-print(features_test.shape)
-instances = [random.randint(0, n_test) for _ in range(10)]
-predict_fn = lambda x: rf.predict_proba(ct.transform(x))
-for i in range(10):
-    # print(instances[i], y_pred[instances[i]], y_test[instances[i]])
-    # print(features_test.iloc[instances[i]])
-    exp = explainer.explain_instance(features_test.iloc[instances[i]].to_numpy(), predict_fn, num_features=10)
-    exp.save_to_file('assets/feature_based/lime_%s.html' % instances[i])
+pd_pred = pd.DataFrame(y_pred, columns=['Income above 50k'])
+pd_pred['Income above 50k'] = pd_pred['Income above 50k'].map({0: 'False', 1: 'True'})
+pd_pred.to_csv('data/pred.csv', index=False)
